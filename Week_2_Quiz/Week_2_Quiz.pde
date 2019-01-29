@@ -31,6 +31,7 @@ void draw()
   }
   else
   {
+    rect(225, height/2, 450, 450);
     fill(25, 100, 30);
   }
   
@@ -42,8 +43,12 @@ void draw()
   }
   else
   {
+    rect(675, height/2, 450, 450);
     fill(250);
   }
+  
+  ellipse(circleX, circleY, size, size);
+  rect(squareX, squareY, size, size);
 }
 
 void mouseClicked()
@@ -72,7 +77,4 @@ void mouseClicked()
       circleClick = false;
     }
   }
-  
-  ellipse(circleX, circleY, size, size);
-  rect(squareX, squareY, size, size);
 }
