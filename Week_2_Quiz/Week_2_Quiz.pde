@@ -22,6 +22,28 @@ void setup()
 void draw()
 { 
   mouseClicked();
+  
+  if(circleClick)
+  {
+    //background square fill color changes
+    rect(225, height/2, 450, 450);
+    fill(100, 100, 30);
+  }
+  else
+  {
+    fill(25, 100, 30);
+  }
+  
+  if(squareClick)
+  {
+    //background square fill color changes
+    rect(675, height/2, 450, 450);
+    fill(0);
+  }
+  else
+  {
+    fill(250);
+  }
 }
 
 void mouseClicked()
@@ -31,14 +53,10 @@ void mouseClicked()
     if(mouseX > 525 && mouseX < 835 && mouseY > height/2 - size/2 && mouseY < height/2 + size/2)
     {
       squareClick = true;
-      rect(675, height/2, 450, 450);
-      fill(30, 20, 30);
     }
     else
     {
       squareClick = false;
-      rect(675, height/2, 450, 450);
-      fill(40, 250, 20);
     }
   }
     
@@ -46,14 +64,12 @@ void mouseClicked()
   {
     if(mouseX > 225 - size/2 && mouseX < 225 + size/2 && mouseY > height/2 - size/2 && mouseY < height/2 + size/2)
     {
+      //If mouse is pressed and within the limit (circle)
       circleClick = true;
-      rect(225, height/2, 450, 450);
-      fill(100, 100, 30);
     }
     else
     {
       circleClick = false;
-      fill(100, 20, 20);
     }
   }
   
