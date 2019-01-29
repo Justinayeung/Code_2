@@ -13,6 +13,7 @@ void setup()
 {
   size(900, 450);
   rectMode(CENTER);
+  noStroke();
   circleX = 225;
   circleY = height/2;
   squareX = 675;
@@ -28,11 +29,10 @@ void draw()
     //background square fill color changes
     rect(225, height/2, 450, 450);
     fill(100, 100, 30);
-  }
-  else
-  {
-    rect(225, height/2, 450, 450);
-    fill(25, 100, 30);
+    
+    //The background side of square would stay as if it was false
+    rect(675, height/2, 450, 450);
+    fill(250);
   }
   
   if(squareClick)
@@ -40,11 +40,10 @@ void draw()
     //background square fill color changes
     rect(675, height/2, 450, 450);
     fill(0);
-  }
-  else
-  {
-    rect(675, height/2, 450, 450);
-    fill(250);
+    
+    //The background side of the circle would stay as if it was false
+    rect(225, height/2, 450, 450);
+    fill(200, 170, 30);
   }
   
   ellipse(circleX, circleY, size, size);
@@ -57,11 +56,15 @@ void mouseClicked()
   {
     if(mouseX > 525 && mouseX < 835 && mouseY > height/2 - size/2 && mouseY < height/2 + size/2)
     {
+      //if mouse is pressed within the limits (square)
       squareClick = true;
     }
     else
     {
+      //if it is not true it will = false
       squareClick = false;
+      rect(675, height/2, 450, 450);
+      fill(250);
     }
   }
     
@@ -74,7 +77,10 @@ void mouseClicked()
     }
     else
     {
+      //if it is not true it will = false
       circleClick = false;
+      rect(225, height/2, 450, 450);
+      fill(200, 170, 30);
     }
   }
 }
