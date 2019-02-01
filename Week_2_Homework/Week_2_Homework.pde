@@ -1,5 +1,5 @@
 PVector pos, velocity;
-float speed;
+float speed = 3;
 float angle = 0;
 
 int rectX, rectY;
@@ -15,7 +15,7 @@ void setup()
 {
   size(1000, 1000);
   
-  pos = new PVector(0, 0);
+  pos = new PVector(width/2, height/2);
   velocity = new PVector();
   
   rectColor = color (150, 200, 210);
@@ -28,7 +28,7 @@ void draw()
 {
   background(170, 200, 210);
   Car();
- 
+    
   //https://github.com/bennorskov/Parsons-Code-2-2019/blob/master/Week%202/Quiz/buttonQuiz/buttonQuiz.pde
   Buttons();    
   Input();
@@ -119,39 +119,39 @@ void Input()
     
   if(overW)
   {
-    velocity.y = -2;
+    velocity.y = -speed;
   }
   else if(overS)
   {
-    velocity.y = 2;
+    velocity.y = speed;
+  }
+  else if(overA)
+  {    
+    velocity.x = -speed;
+    pushMatrix();
+    translate(pos.x, pos.y);
+    //https://processing.org/reference/PVector_heading_.html
+    rotate(pos.heading());
+    popMatrix();
+  }
+  else if(overD)
+  {
+    velocity.x = speed;
+    pushMatrix();
+    translate(pos.x, pos.y);
+    //https://processing.org/reference/PVector_heading_.html
+    rotate(pos.heading());
+    popMatrix();
   }
   else
   {
     velocity.x = 0;
     velocity.y = 0;
   }
-  pos.add(velocity);
   
-  if(overA)
-  {
-    pushMatrix();
-    translate(pos.x, pos.y);
-    pos.rotate(angle * 0.0001 * -TWO_PI);
-    angle++;
-    popMatrix();
-  }
-  else if(overD)
-  {
-    pushMatrix();
-    translate(pos.x, pos.y);
-    pos.rotate(angle * 0.0001 * TWO_PI);
-    angle++;
-    popMatrix();
-  }
-  else
-  {
-    angle = 0;
-  }
+  velocity.normalize();
+  velocity.mult(speed);
+  pos.add(velocity);
 }
 
 void Buttons()
