@@ -1,5 +1,6 @@
 PVector pos, velocity;
 float speed;
+float angle = 0;
 
 int rectX, rectY;
 int rectSize = 80;
@@ -26,15 +27,11 @@ void setup()
 void draw()
 {
   background(170, 200, 210);
-  
+  Car();
+ 
   //https://github.com/bennorskov/Parsons-Code-2-2019/blob/master/Week%202/Quiz/buttonQuiz/buttonQuiz.pde
   Buttons();    
   Input();
-  
-  fill(230);
-  rect(pos.x, pos.y, 50, 100);
-  fill(250);
-  rect(pos.x+10, pos.y+25, 30, 50);
   
   fill(230);
   triangle(rectX+15, rectY-60, rectX+40, rectY-105, rectX+65, rectY-60);    //W
@@ -124,17 +121,9 @@ void Input()
   {
     velocity.y = -2;
   }
-  else if(overA)
-  {
-    velocity.x = -2;
-  }
   else if(overS)
   {
     velocity.y = 2;
-  }
-  else if(overD)
-  {
-    velocity.x = 2;
   }
   else
   {
@@ -142,6 +131,27 @@ void Input()
     velocity.y = 0;
   }
   pos.add(velocity);
+  
+  if(overA)
+  {
+    pushMatrix();
+    translate(pos.x, pos.y);
+    pos.rotate(angle * 0.0001 * -TWO_PI);
+    angle++;
+    popMatrix();
+  }
+  else if(overD)
+  {
+    pushMatrix();
+    translate(pos.x, pos.y);
+    pos.rotate(angle * 0.0001 * TWO_PI);
+    angle++;
+    popMatrix();
+  }
+  else
+  {
+    angle = 0;
+  }
 }
 
 void Buttons()
@@ -192,4 +202,17 @@ void Buttons()
     fill(rectColor);    //Else color is the original color
   }
   rect(rectX+120, rectY, rectSize, rectSize);
+}
+
+void Car()
+{
+  fill(230);
+  rect(pos.x, pos.y, 50, 100);
+  fill(250);
+  rect(pos.x+10, pos.y+25, 30, 50);
+  fill(50);
+  rect(pos.x-5, pos.y+10, 5, 10);
+  rect(pos.x-5, pos.y+80, 5, 10);
+  rect(pos.x+50, pos.y+10, 5, 10);
+  rect(pos.x+50, pos.y+80, 5, 10);
 }
