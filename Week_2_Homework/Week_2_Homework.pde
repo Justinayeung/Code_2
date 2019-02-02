@@ -14,30 +14,38 @@ boolean overD = false;
 void setup()
 {
   size(1000, 1000);
-  
+  rectMode(CENTER);
+  noStroke();
+
   pos = new PVector(width/2, height/2);
   velocity = new PVector();
   
-  rectColor = color (150, 200, 210);
+  rectColor = color (100, 200, 210);
   rectHighlight = color(150, 200, 250);
-  rectX = 3 * (width/4);
+  rectX = 3 * (width/4) + 50;
   rectY = 3 * (height/4) + 80;
 }
 
 void draw()
 {
   background(170, 200, 210);
-  Car();
-    
+  Road();
+  
+  //pushMatrix();
+  //translate(pos.x, pos.y);
+  //https://processing.org/reference/PVector_heading_.html
+  //rotate(velocity.heading());
+  //Car();
+  //popMatrix();
+  
   //https://github.com/bennorskov/Parsons-Code-2-2019/blob/master/Week%202/Quiz/buttonQuiz/buttonQuiz.pde
   Buttons();    
   Input();
-  
-  fill(230);
-  triangle(rectX+15, rectY-60, rectX+40, rectY-105, rectX+65, rectY-60);    //W
-  triangle(rectX-105, rectY+40, rectX-60, rectY+15, rectX-60, rectY+65);    //A
-  triangle(rectX+15, rectY+20, rectX+40, rectY+65, rectX+65, rectY+20);     //S
-  triangle(rectX+185, rectY+40, rectX+140, rectY+15, rectX+140, rectY+65);  //D
+
+  //https://processing.org/reference/PVector_heading_.html
+  translate(pos.x+25, pos.y-10);
+  rotate(velocity.heading());
+  Car();
 }
 
 void Input()
@@ -67,10 +75,10 @@ void Input()
   //}
   //pos.add(velocity);
   
-  if(mouseX > 3 * (width/4) && 
-     mouseX < (3 * (width/4))+rectSize && 
-     mouseY > (3 * (height/4) + 80)-120 && 
-     mouseY < ((3 * (height/4) + 80)+rectSize)-120)
+  if(mouseX > rectX && 
+     mouseX < (rectX)+rectSize && 
+     mouseY > (rectY)-120 && 
+     mouseY < (rectY+rectSize)-120)
     {
       overW = true;
     }
@@ -80,10 +88,10 @@ void Input()
     }
   
   
-  if(mouseX > (3 * (width/4))-120 && 
-     mouseX < ((3 * (width/4))+rectSize)-120 && 
-     mouseY > 3 * (height/4) + 80 && 
-     mouseY < (3 * (height/4) + 80)+rectSize)
+  if(mouseX > (rectX)-110 && 
+     mouseX < (rectX + rectSize)-110 && 
+     mouseY > rectY-15 && 
+     mouseY < (rectY+rectSize)-15)
     {
       overA = true;
     }
@@ -93,10 +101,10 @@ void Input()
     }
   
   
-  if(mouseX > 3 * (width/4) && 
-     mouseX < (3 * (width/4))+rectSize && 
-     mouseY > 3 * (height/4) + 80 && 
-     mouseY < (3 * (height/4) + 80)+rectSize)
+  if(mouseX > rectX && 
+     mouseX < rectX+rectSize && 
+     mouseY > rectY+60 && 
+     mouseY < (rectY+rectSize)+60)
     {
       overS = true;
     }
@@ -105,10 +113,10 @@ void Input()
       overS = false;
     }
   
-  if(mouseX > (3 * (width/4))+120 && 
-     mouseX < ((3 * (width/4))+rectSize)+120 && 
-     mouseY > 3 * (height/4) + 80 && 
-     mouseY < (3 * (height/4) + 80)+rectSize)
+  if(mouseX > (rectX)+110 && 
+     mouseX < (rectX+rectSize)+110 && 
+     mouseY > rectY-15 && 
+     mouseY < (rectY+rectSize)-15)
     {
       overD = true;
     }
@@ -128,20 +136,10 @@ void Input()
   else if(overA)
   {    
     velocity.x = -speed;
-    pushMatrix();
-    translate(pos.x, pos.y);
-    //https://processing.org/reference/PVector_heading_.html
-    rotate(pos.heading());
-    popMatrix();
   }
   else if(overD)
   {
     velocity.x = speed;
-    pushMatrix();
-    translate(pos.x, pos.y);
-    //https://processing.org/reference/PVector_heading_.html
-    rotate(pos.heading());
-    popMatrix();
   }
   else
   {
@@ -165,7 +163,9 @@ void Buttons()
   {
     fill(rectColor);    //Else color is the original color
   }
-  rect(rectX, rectY-120, rectSize, rectSize);
+  rect(rectX+50, rectY-60, rectSize, rectSize);
+  fill(230);
+  triangle(rectX+25, rectY-40, rectX+50, rectY-85, rectX+75, rectY-40);    //W
   
     
   //-------- A --------
@@ -177,7 +177,9 @@ void Buttons()
   {
     fill(rectColor);    //Else color is the original color
   }
-  rect(rectX-120, rectY, rectSize, rectSize);
+  rect(rectX-50, rectY+25, rectSize, rectSize);
+  fill(230);
+  triangle(rectX-75, rectY+20, rectX-30, rectY, rectX-30, rectY+50);    //A
   
     
   //-------- S --------
@@ -189,7 +191,9 @@ void Buttons()
   {
     fill(rectColor);    //Else color is the original color
   }
-  rect(rectX, rectY, rectSize, rectSize);
+  rect(rectX+50, rectY+100, rectSize, rectSize);
+  fill(230);
+  triangle(rectX+25, rectY+80, rectX+50, rectY+125, rectX+75, rectY+80);     //S
   
   
   //-------- D --------
@@ -201,18 +205,29 @@ void Buttons()
   {
     fill(rectColor);    //Else color is the original color
   }
-  rect(rectX+120, rectY, rectSize, rectSize);
+  rect(rectX+150, rectY+25, rectSize, rectSize);
+  fill(230);
+  triangle(rectX+175, rectY+25, rectX+130, rectY, rectX+130, rectY+50);  //D
 }
 
 void Car()
 {
-  fill(230);
-  rect(pos.x, pos.y, 50, 100);
-  fill(250);
-  rect(pos.x+10, pos.y+25, 30, 50);
+  fill(255, 40, 20);
+  rect(0, 0, 100, -50);
+  fill(255, 200);
+  rect(-10, 0, 50, -30);
+  fill(200);
+  rect(-30, 27, 10, -5);
+  rect(30, 27, 10, -5);
+  rect(-30, -26, 10, -5);
+  rect(30, -26, 10, -5);
+  ellipse(40, -10, 7, 7);
+  ellipse(40, 10, 7, 7);
+}
+
+void Road()
+{
   fill(50);
-  rect(pos.x-5, pos.y+10, 5, 10);
-  rect(pos.x-5, pos.y+80, 5, 10);
-  rect(pos.x+50, pos.y+10, 5, 10);
-  rect(pos.x+50, pos.y+80, 5, 10);
+  rect(width/2, height/2, 400, 1000);
+  rect(width/2, height/2, 1000, 400);
 }
