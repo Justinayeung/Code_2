@@ -4,12 +4,17 @@ float angle = 0;
 
 int rectX, rectY;
 int rectSize = 80;
+int xPosition2 = width/2;
+int xPosition3 = width/2 + 500;
+int xPosition4 = width/2;
+int xPosition5 = width/2 + 500;
 color rectColor;
 color rectHighlight;
 boolean overW = false;
 boolean overA = false;
 boolean overS = false;
 boolean overD = false;
+String display = "Level 1";
 
 void setup()
 {
@@ -17,7 +22,7 @@ void setup()
   rectMode(CENTER);
   noStroke();
 
-  pos = new PVector(width/2, height/2);
+  pos = new PVector(width/2, 900);
   velocity = new PVector();
   
   rectColor = color (100, 200, 210);
@@ -30,6 +35,44 @@ void draw()
 {
   background(170, 200, 210);
   Road();
+  Collision();
+  drawText();
+  
+  if(display == "Game Over" || display == "You Win!")
+  {
+    xPosition2 += 0;
+    xPosition3 += 0;
+    xPosition4 -= 0;
+    xPosition5 -= 0;
+  }
+  else
+  {
+    xPosition2 += 3;
+    xPosition3 += 3;
+    xPosition4 -= 4;
+    xPosition5 -= 4;
+  }
+  Car2();
+  Car3();
+  Car4();
+  Car5();
+  
+  if(xPosition2 > width + rectSize)
+  {
+    xPosition2 = 0 - rectSize;
+  }
+  else if(xPosition3 > width + rectSize)
+  {
+    xPosition3 = 0 - rectSize;
+  }
+  else if(xPosition4 < 0 - rectSize)
+  {
+    xPosition4 = width + rectSize;
+  }
+  else if(xPosition5 < 0 - rectSize)
+  {
+    xPosition5 = width + rectSize;
+  }
   
   //pushMatrix();
   //translate(pos.x, pos.y);
@@ -45,7 +88,19 @@ void draw()
   //https://processing.org/reference/PVector_heading_.html
   translate(pos.x+25, pos.y-10);
   rotate(velocity.heading());
-  Car();
+  if(display == "Game Over")
+  {
+    //Do Nothing
+  }
+  else
+  {
+    Car();
+  }
+  
+  if(pos.y <= 250)
+  {
+    display = "You Win!";
+  }
 }
 
 void Input()
@@ -225,9 +280,112 @@ void Car()
   ellipse(40, 10, 7, 7);
 }
 
+void Car2()
+{
+  fill(30, 100, 0);
+  rect(xPosition2, (height/2)-100, 100, -50);
+  fill(255, 200);
+  rect(xPosition2-10, (height/2)-100, 50, -30);
+  fill(200);
+  rect(xPosition2-30, ((height/2)-100)+27, 10, -5);
+  rect(xPosition2+30, ((height/2)-100)+27, 10, -5);
+  rect(xPosition2-30, ((height/2)-100)-26, 10, -5);
+  rect(xPosition2+30, ((height/2)-100)-26, 10, -5);
+  ellipse(xPosition2+40, ((height/2)-100)-10, 7, 7);
+  ellipse(xPosition2+40, ((height/2)-100)+10, 7, 7);
+}
+
+void Car3()
+{
+  fill(30, 100, 150);
+  rect(xPosition3, (height/2)-100, 100, -50);
+  fill(255, 200);
+  rect(xPosition3-10, (height/2)-100, 50, -30);
+  fill(200);
+  rect(xPosition3-30, ((height/2)-100)+27, 10, -5);
+  rect(xPosition3+30, ((height/2)-100)+27, 10, -5);
+  rect(xPosition3-30, ((height/2)-100)-26, 10, -5);
+  rect(xPosition3+30, ((height/2)-100)-26, 10, -5);
+  ellipse(xPosition3+40, ((height/2)-100)-10, 7, 7);
+  ellipse(xPosition3+40, ((height/2)-100)+10, 7, 7);
+}
+
+void Car4()
+{
+  fill(150, 150, 0);
+  rect(xPosition4, (height/2)+100, 100, -50);
+  fill(255, 200);
+  rect(xPosition4+10, (height/2)+100, 50, -30);
+  fill(200);
+  rect(xPosition4-30, ((height/2)+100)+27, 10, -5);
+  rect(xPosition4+30, ((height/2)+100)+27, 10, -5);
+  rect(xPosition4-30, ((height/2)+100)-26, 10, -5);
+  rect(xPosition4+30, ((height/2)+100)-26, 10, -5);
+  ellipse(xPosition4-40, ((height/2)+100)-10, 7, 7);
+  ellipse(xPosition4-40, ((height/2)+100)+10, 7, 7);
+}
+
+void Car5()
+{
+  fill(200, 100, 150);
+  rect(xPosition5, (height/2)+100, 100, -50);
+  fill(255, 200);
+  rect(xPosition5+10, (height/2)+100, 50, -30);
+  fill(200);
+  rect(xPosition5-30, ((height/2)+100)+27, 10, -5);
+  rect(xPosition5+30, ((height/2)+100)+27, 10, -5);
+  rect(xPosition5-30, ((height/2)+100)-26, 10, -5);
+  rect(xPosition5+30, ((height/2)+100)-26, 10, -5);
+  ellipse(xPosition5-40, ((height/2)+100)-10, 7, 7);
+  ellipse(xPosition5-40, ((height/2)+100)+10, 7, 7);
+}
+
 void Road()
 {
   fill(50);
   rect(width/2, height/2, 400, 1000);
   rect(width/2, height/2, 1000, 400);
+  
+  fill(255, 255, 100);
+  rect(width/2, 0, 10, 100);
+  rect(width/2, 200, 10, 100);
+  rect(width/2, 800, 10, 100);
+  rect(width/2, 1000, 10, 100);
+  
+  rect(0, height/2, 100, 10);
+  rect(200, height/2, 100, 10);
+  rect(800, height/2, 100, 10);
+  rect(1000, height/2, 100, 10);
+}
+
+void Collision()
+{
+  float d = dist(xPosition2, height/2-100, pos.x, pos.y);
+  float e = dist(xPosition3, height/2-100, pos.x, pos.y);
+  float f = dist(xPosition4, height/2+100, pos.x, pos.y);     
+  float g = dist(xPosition5, height/2+100, pos.x, pos.y);
+  
+  if(d <= rectSize)
+  {
+    display = "Game Over";
+  }
+  else if(e <= rectSize)
+  {
+    display = "Game Over";
+  }
+  else if(f <= rectSize)
+  {
+    display = "Game Over";
+  }
+  else if(g <= rectSize)
+  {
+    display = "Game Over";
+  }
+}
+
+void drawText()    //https://github.com/bennorskov/Parsons-Code-2-2019/blob/master/Week%202/Quiz/buttonQuiz/buttonQuiz.pde
+{
+  fill(255);
+  textSize(50);
+  text(display, 400, 100);
 }
