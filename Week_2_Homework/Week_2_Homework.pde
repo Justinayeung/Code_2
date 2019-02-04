@@ -40,6 +40,7 @@ void draw()
   
   if(display == "Game Over" || display == "You Win!")
   {
+    //Positiion of x on the cars will not move
     xPosition2 += 0;
     xPosition3 += 0;
     xPosition4 -= 0;
@@ -47,6 +48,7 @@ void draw()
   }
   else
   {
+    //Position of x on the cars will be continuously moving
     xPosition2 += 3;
     xPosition3 += 3;
     xPosition4 -= 4;
@@ -74,13 +76,6 @@ void draw()
     xPosition5 = width + rectSize;
   }
   
-  //pushMatrix();
-  //translate(pos.x, pos.y);
-  //https://processing.org/reference/PVector_heading_.html
-  //rotate(velocity.heading());
-  //Car();
-  //popMatrix();
-  
   //https://github.com/bennorskov/Parsons-Code-2-2019/blob/master/Week%202/Quiz/buttonQuiz/buttonQuiz.pde
   Buttons();    
   Input();
@@ -88,9 +83,10 @@ void draw()
   //https://processing.org/reference/PVector_heading_.html
   translate(pos.x+25, pos.y-10);
   rotate(velocity.heading());
-  if(display == "Game Over")
+  
+  if(display == "Game Over")    //If Game Over
   {
-    //Do Nothing
+    //Do not draw Car()
   }
   else
   {
@@ -105,6 +101,7 @@ void draw()
 
 void Input()
 {
+  //Moving using keyboard
   //if(key == 'w')    //https://processing.org/reference/key.html
   //{
   //  velocity.y = -2;
@@ -130,74 +127,32 @@ void Input()
   //}
   //pos.add(velocity);
   
-  if(mouseX > rectX && 
-     mouseX < (rectX)+rectSize && 
-     mouseY > (rectY)-120 && 
-     mouseY < (rectY+rectSize)-120)
-    {
-      overW = true;
-    }
-    else
-    {
-      overW = false;
-    }
-  
-  
-  if(mouseX > (rectX)-110 && 
-     mouseX < (rectX + rectSize)-110 && 
-     mouseY > rectY-15 && 
-     mouseY < (rectY+rectSize)-15)
-    {
-      overA = true;
-    }
-    else
-    {
-      overA = false;
-    }
-  
-  
-  if(mouseX > rectX && 
-     mouseX < rectX+rectSize && 
-     mouseY > rectY+60 && 
-     mouseY < (rectY+rectSize)+60)
-    {
-      overS = true;
-    }
-    else
-    {
-      overS = false;
-    }
-  
-  if(mouseX > (rectX)+110 && 
-     mouseX < (rectX+rectSize)+110 && 
-     mouseY > rectY-15 && 
-     mouseY < (rectY+rectSize)-15)
-    {
-      overD = true;
-    }
-    else
-    {
-      overD = false;
-    }
-    
-  if(overW)
+  if(mouseX > rectX && mouseX < (rectX)+rectSize && mouseY > (rectY)-120 && mouseY < (rectY+rectSize)-120)
   {
+    overW = true;
     velocity.y = -speed;
   }
-  else if(overS)
+  else if(mouseX > (rectX)-110 && mouseX < (rectX + rectSize)-110 && mouseY > rectY-15 && mouseY < (rectY+rectSize)-15)
   {
-    velocity.y = speed;
-  }
-  else if(overA)
-  {    
+    overA = true;
     velocity.x = -speed;
   }
-  else if(overD)
+  else if(mouseX > rectX && mouseX < rectX+rectSize && mouseY > rectY+60 && mouseY < (rectY+rectSize)+60)
   {
-    velocity.x = speed;
+    overS = true;
+    velocity.y = speed;
+  }  
+  else if(mouseX > (rectX)+110 && mouseX < (rectX+rectSize)+110 && mouseY > rectY-15 && mouseY < (rectY+rectSize)-15)
+  {
+    overD = true;
+    velocity.y = speed;
   }
   else
   {
+    overW = false;
+    overA = false;
+    overS = false;
+    overD = false;
     velocity.x = 0;
     velocity.y = 0;
   }
@@ -209,7 +164,7 @@ void Input()
 
 void Buttons()
 {
-  //-------- W --------
+  //---------- W ----------
   if(overW)    //If mouse is over button
   {
     fill(rectHighlight);  //Highlight color for the button
@@ -220,10 +175,10 @@ void Buttons()
   }
   rect(rectX+50, rectY-60, rectSize, rectSize);
   fill(230);
-  triangle(rectX+25, rectY-40, rectX+50, rectY-85, rectX+75, rectY-40);    //W
+  triangle(rectX+25, rectY-40, rectX+50, rectY-85, rectX+75, rectY-40);    //UP
   
     
-  //-------- A --------
+  //---------- A ----------
   if(overA)    //If mouse is over button
   {
     fill(rectHighlight);  //Highlight color for the button
@@ -234,10 +189,10 @@ void Buttons()
   }
   rect(rectX-50, rectY+25, rectSize, rectSize);
   fill(230);
-  triangle(rectX-75, rectY+20, rectX-30, rectY, rectX-30, rectY+50);    //A
+  triangle(rectX-75, rectY+20, rectX-30, rectY, rectX-30, rectY+50);    //LEFT
   
     
-  //-------- S --------
+  //---------- S ----------
   if(overS)    //If mouse is over button
   {
     fill(rectHighlight);  //Highlight color for the button
@@ -248,10 +203,10 @@ void Buttons()
   }
   rect(rectX+50, rectY+100, rectSize, rectSize);
   fill(230);
-  triangle(rectX+25, rectY+80, rectX+50, rectY+125, rectX+75, rectY+80);     //S
+  triangle(rectX+25, rectY+80, rectX+50, rectY+125, rectX+75, rectY+80);     //DOWN
   
   
-  //-------- D --------
+  //---------- D ----------
   if(overD)    //If mouse is over button
   {
     fill(rectHighlight);  //Highlight color for the button
@@ -262,25 +217,25 @@ void Buttons()
   }
   rect(rectX+150, rectY+25, rectSize, rectSize);
   fill(230);
-  triangle(rectX+175, rectY+25, rectX+130, rectY, rectX+130, rectY+50);  //D
+  triangle(rectX+175, rectY+25, rectX+130, rectY, rectX+130, rectY+50);  //RIGHT
 }
 
-void Car()
+void Car()    //Car you controll (Red)
 {
   fill(255, 40, 20);
-  rect(0, 0, 100, -50);
+  rect(0, 0, 100, -50);    //Main rectangle
   fill(255, 200);
-  rect(-10, 0, 50, -30);
+  rect(-10, 0, 50, -30);    //Top rectangle
   fill(200);
-  rect(-30, 27, 10, -5);
-  rect(30, 27, 10, -5);
-  rect(-30, -26, 10, -5);
-  rect(30, -26, 10, -5);
-  ellipse(40, -10, 7, 7);
-  ellipse(40, 10, 7, 7);
+  rect(-30, 27, 10, -5);    //Wheel
+  rect(30, 27, 10, -5);     //Wheel
+  rect(-30, -26, 10, -5);   //Wheel
+  rect(30, -26, 10, -5);    //Wheel
+  ellipse(40, -10, 7, 7);   //Circle
+  ellipse(40, 10, 7, 7);    //Circle
 }
 
-void Car2()
+void Car2()    //Green Car
 {
   fill(30, 100, 0);
   rect(xPosition2, (height/2)-100, 100, -50);
@@ -295,7 +250,7 @@ void Car2()
   ellipse(xPosition2+40, ((height/2)-100)+10, 7, 7);
 }
 
-void Car3()
+void Car3()    //Blue Car
 {
   fill(30, 100, 150);
   rect(xPosition3, (height/2)-100, 100, -50);
@@ -310,7 +265,7 @@ void Car3()
   ellipse(xPosition3+40, ((height/2)-100)+10, 7, 7);
 }
 
-void Car4()
+void Car4()    //Yellow Car
 {
   fill(150, 150, 0);
   rect(xPosition4, (height/2)+100, 100, -50);
@@ -325,7 +280,7 @@ void Car4()
   ellipse(xPosition4-40, ((height/2)+100)+10, 7, 7);
 }
 
-void Car5()
+void Car5()    //Pink Car
 {
   fill(200, 100, 150);
   rect(xPosition5, (height/2)+100, 100, -50);
@@ -346,13 +301,13 @@ void Road()
   rect(width/2, height/2, 400, 1000);
   rect(width/2, height/2, 1000, 400);
   
-  fill(255, 255, 100);
+  fill(255, 255, 100);    //Yellow strips along the y
   rect(width/2, 0, 10, 100);
   rect(width/2, 200, 10, 100);
   rect(width/2, 800, 10, 100);
   rect(width/2, 1000, 10, 100);
   
-  rect(0, height/2, 100, 10);
+  rect(0, height/2, 100, 10);    //Yellow strips along the x
   rect(200, height/2, 100, 10);
   rect(800, height/2, 100, 10);
   rect(1000, height/2, 100, 10);
@@ -360,24 +315,26 @@ void Road()
 
 void Collision()
 {
-  float d = dist(xPosition2, height/2-100, pos.x, pos.y);
-  float e = dist(xPosition3, height/2-100, pos.x, pos.y);
-  float f = dist(xPosition4, height/2+100, pos.x, pos.y);     
-  float g = dist(xPosition5, height/2+100, pos.x, pos.y);
+  //dist(x, y, x1, y1);
+  float d = dist(xPosition2, height/2-100, pos.x, pos.y);    //Checking the distance between green car and player
+  float e = dist(xPosition3, height/2-100, pos.x, pos.y);    //Checking the distance between blue car and player
+  float f = dist(xPosition4, height/2+100, pos.x, pos.y);    //Checking the distance between yellow car and player     
+  float g = dist(xPosition5, height/2+100, pos.x, pos.y);    //Checking the distance between red car and player
   
-  if(d <= rectSize)
+  //If the distance is less than rectange(car) size than game over
+  if(d <= rectSize)    //Green Car
   {
     display = "Game Over";
   }
-  else if(e <= rectSize)
+  else if(e <= rectSize)    //Blue Car
   {
     display = "Game Over";
   }
-  else if(f <= rectSize)
+  else if(f <= rectSize)    //Yellow Car
   {
     display = "Game Over";
   }
-  else if(g <= rectSize)
+  else if(g <= rectSize)    //Pink Car
   {
     display = "Game Over";
   }
@@ -385,7 +342,7 @@ void Collision()
 
 void drawText()    //https://github.com/bennorskov/Parsons-Code-2-2019/blob/master/Week%202/Quiz/buttonQuiz/buttonQuiz.pde
 {
-  fill(255);
-  textSize(50);
-  text(display, 400, 100);
+  fill(255);    //Color of text
+  textSize(50);    //Size of text
+  text(display, 400, 100);    //Where text is displayed
 }
