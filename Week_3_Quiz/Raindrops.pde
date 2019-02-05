@@ -16,7 +16,7 @@ class rainDrops
   void display()
   {
     noStroke();
-    fill(0, 0, 255);
+    fill(0, 100, 255);
     ellipse(x, y, s, s);
   }
   

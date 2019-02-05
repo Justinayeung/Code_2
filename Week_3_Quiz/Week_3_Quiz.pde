@@ -33,7 +33,7 @@ void setup()
 
 void draw()
 { 
-  background(30, 0, 50);
+  background(30, 0, 70);
   
   for(rainDrops d : drops)
   {
