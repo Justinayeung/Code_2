@@ -1,52 +1,104 @@
-int numC = 20;
-int numR = 10;
-float yC = 550;
-float xC = 150;
-float yR = 101;
-float xR = 101;
-int sizeR = 90;
-int sizeC = 50;
-int sizeCR = sizeC/2;
-boolean Cclicked = false;
-boolean Rmoved = false;
+//https://processing.org/examples/mousefunctions.html
+int numC;
+int numR;
+float yC;
+float xC;
+float yR;
+float xR;
+int sizeR;
+int sizeC;
+int sizeCR;
+boolean Cclicked;
+boolean movedR;
+boolean overBox;
+boolean locked;
+float xOffset;
+float yOffset;
+CircleB c1;
+SquareB r1;
 
-ArrayList<CircleB> circle = new ArrayList<CircleB>();
-ArrayList<SquareB> rect = new ArrayList<SquareB>();
-
-void setup()
-{
+void setup(){
   size(1000, 1000);
   noStroke();
-  circle.add(new CircleB(xC, yC, sizeC));
-  for(int i = 0; i < numR;  i++){
-    for(int j = 0; j < numR; j++){
-      rect.add(new SquareB(xR * i, yR * j, sizeR));
-    }
-  }
+  numC = 20;
+  numR = 10;
+  yC = 550;
+  xC = 150;
+  yR = 500;
+  xR = 100;
+  sizeR = 100;
+  sizeC = 50;
+  sizeCR = sizeC/2;
+  Cclicked = false;
+  movedR = false;
+  overBox = false;
+  locked = false;
+  xOffset = 0;
+  yOffset = 0;
 }
 
 void draw(){
-  background(0);
-  for(CircleB c : circle){
-    c.display();
+  if(Cclicked){
+    background(255, 255, 0);
+  }else{
+    background(0);
   }
-  for(SquareB r : rect){
-    r.display();
+  
+  c1 = new CircleB(xC, yC, sizeC);
+  c1.display();
+  if(mouseX > xR && mouseX < xR+sizeR &&  mouseY > yR && mouseY < yR+sizeR){
+    overBox = true;
+  }else{
+    overBox = false;
   }
+  fill(245, 150, 150);
+  r1 = new SquareB(xR, yR, sizeR);
+  r1.display();
+  
+  float d2 = dist(xR, yR, xC, yC);
+  if(d2 > sizeC){
+    movedR = true;
+  }else{
+    movedR = false;
+  }
+  
+  //explosion();
 }
 
 void mouseClicked(){
   float d1 = dist(mouseX, mouseY, xC, yC);
-  if(d1 < sizeCR && Rmoved){
+  if(d1 < sizeCR && movedR){
     Cclicked = true;
   }else{
     Cclicked = false;
   }
   println(Cclicked);
-  
-  if(Cclicked){
-    fill(100, 30, 40);
+}
+
+void mousePressed(){
+  if(overBox){
+    locked = true;
+    fill(255, 255, 255);
   }else{
-    fill(100, 200);
+    locked = false;
   }
+  xOffset = mouseX-xR;
+  yOffset = mouseY-yR;
+}
+
+void mouseDragged(){
+  if(locked){
+    xR = mouseX-xOffset;
+    yR = mouseY-yOffset;
+  }
+}
+
+void mouseReleased(){
+  locked = false;
+}
+
+void explosion(){
+  fill(255);
+  c1 = new CircleB(width/2, height/2, sizeCR);
+  c1.display();
 }

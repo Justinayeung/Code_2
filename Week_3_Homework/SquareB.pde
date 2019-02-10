@@ -2,8 +2,6 @@ class SquareB{
   float x;
   float y;
   float s;
-  color randC = color(random(0, 255), random(0, 255), random(0, 255));
-  
   SquareB(float x0, float y0, float s0){
     x = x0;
     y = y0;
@@ -11,7 +9,7 @@ class SquareB{
   }
   
   void display(){
-    fill(randC);
+    rectMode(CORNER);
     rect(x, y, s, s);
   }
 }
