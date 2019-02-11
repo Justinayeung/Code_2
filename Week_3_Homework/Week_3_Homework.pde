@@ -7,11 +7,11 @@ boolean Cclicked, Cc, movedR, overBox, locked, locked1, RinSq, overR, Pcirc, ove
 float xOffset, yOffset, xOffset1, yOffset1;
 float angle = 0.0f;
 float incr = 0.05;
-CircleB c1;
-CircleB c2;
-CircleB c3, c4, c5, c6;
-SquareB r1;
-ArrayList<CircleB> circles = new ArrayList<CircleB>();
+Buttons c1;
+Buttons c2;
+Buttons c3, c4, c5, c6;
+Buttons r1;
+ArrayList<Buttons> circles = new ArrayList<Buttons>();
 
 void setup()
 {
@@ -58,14 +58,14 @@ void draw()
   {
     background(255, 255, 0);
     fill(170, 240, 165);
-    r1 = new SquareB(xR1, yR1, sizeR1);
+    r1 = new Buttons(0, 0, 0, 0, 0, 0, 0, xR1, yR1, sizeR1);
     r1.display();
   }
   else
   {
     background(0);
   }
-  c1 = new CircleB(xC, yC, sizeC, 0, 0, 0, 0);
+  c1 = new Buttons(xC, yC, sizeC, 0, 0, 0, 0, 0, 0, 0);
   c1.display();
   overBox();
   movedR();
@@ -148,12 +148,12 @@ void mouseReleased()
 void CC()
 {
   background(100, 100, 100);
-  c1 = new CircleB(xC2, yC2, sizeC/2, 0, 0, 0, 0);
+  c1 = new Buttons(xC2, yC2, sizeC/2, 0, 0, 0, 0, 0, 0, 0);
   c1.display();
   fill(0, 100);
-  r1 = new SquareB(xR2, yR2, sizeC);
+  r1 = new Buttons(0, 0, 0, 0, 0, 0, 0, xR2, yR2, sizeC);
   r1.display();
-  r1 = new SquareB(xR3, yR3, sizeC);
+  r1 = new Buttons(0, 0, 0, 0, 0, 0, 0, xR3, yR3, sizeC);
   r1.display();
 }
 
@@ -168,7 +168,7 @@ void overBox()
     overBox = false;
   }
   fill(245, 150, 150);
-  r1 = new SquareB(xR, yR, sizeR);
+  r1 = new Buttons(0, 0, 0, 0, 0, 0, 0, xR, yR, sizeR);
   r1.display();
 }
 
@@ -213,7 +213,7 @@ void overR()
   
   if(overR && RinSq)
   {
-    c2 = new CircleB(xC1, yC1, sizeC1, 0, 0, 0, 0);
+    c2 = new Buttons(xC1, yC1, sizeC1, 0, 0, 0, 0, 0, 0, 0);
     c2.display();
   }
 }
@@ -225,11 +225,11 @@ void colors()
     fill(random(0, 255), random(0, 255), random(0, 255));
     for(int i = 0; i < numC; i++)
     {
-      circles.add(new CircleB(0, 0, sizeC/2, random(0, width), random(0, height), 0, 0));
+      circles.add(new Buttons(0, 0, sizeC/2, random(0, width), random(0, height), 0, 0, 0, 0, 0));
     }
-    for(CircleB c : circles)
+    for(Buttons b : circles)
     {
-      c.colors();
+      b.colors();
     }
   }
 }
@@ -244,11 +244,11 @@ void spin()
       angle += incr;
       float y1 = height/2 + sin(angle) * (height/2 - sizeC/2);
       float x1 = i++;
-      circles.add(new CircleB(0, 0, sizeC/2, 0, 0, x1*i, y1));
+      circles.add(new Buttons(0, 0, sizeC/2, 0, 0, x1*i, y1, 0, 0, 0));
     }
-    for(CircleB c : circles)
+    for(Buttons b : circles)
     {
-      c.spin();
+      b.spin();
     }
   }
 }
