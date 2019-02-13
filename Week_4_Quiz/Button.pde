@@ -2,32 +2,25 @@ class Button
 {
   float x;
   float y;
-  float s;
-  float d;
-  boolean red = true;
-  boolean green = false;
-  boolean blue = false;
   
-  Button(float _x, float _y, float _s, float _d)
+  Button(float _x, float _y)
   {
     x = _x;
     y = _y;
-    s = _s;
-    d = _d;
+       s = random(50, 100);
   }
   
   void display()
   {
-    fill(255, 0, 0);
+    fill(colors[c]);
     ellipse(x, y, s, s);
-    
-    if(d < s)
+  }
+  
+  void onClick()
+  { 
+    if(d < s/2)
     {
-      stroke(255, 255, 0);
+      c = (c + 1) % 6;
     }
-    else
-    {
-      stroke(0);
-    }
-  }  
+  }
 }

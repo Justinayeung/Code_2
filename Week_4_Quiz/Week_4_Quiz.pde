@@ -1,80 +1,73 @@
-Button b1;
-float x;
-float y;
-float s;
+//https://processing.org/tutorials/2darray/
+
+Button[][] buttons;
+//ArrayList<Button> buttons = new ArrayList<Button>();  
+color[] colors = new color[6];
+int c = 0;
 float d;
-boolean red = true;
-boolean green = false;
-boolean blue = false;
-color r = color(255, 0, 0);
-color g = color(0, 255, 0);
-color b = color(0, 0, 255);
+float s;
+int widthNum = 10;
+int heightNum = 10;
 
 void setup()
 {
-  background(0);
   size(1000, 1000);
-  x = width/2;
-  y = height/2;
-  s = 100;
-  d = dist(mouseX, mouseY, x, y);
+  colors[0] = color(255, 0, 0);
+  colors[1] = color(0, 255, 0);
+  colors[2] = color(0, 0, 255);
+  colors[3] = color(255, 255, 0);
+  colors[4] = color(255, 0, 255);
+  colors[5] = color(0, 255, 255);
+  buttons = new Button[widthNum][heightNum];
+  for(int i = 0; i < widthNum; i++)
+  {
+    for(int j = 0; j < heightNum; j++)
+    {
+      buttons[i][j] = new Button(i*110, j*110);
+      //buttons.add(new Button(i*110, j*110));
+    }
+  }
 }
 
 void draw()
-{
-  colors();
+{ 
+  background(0);
+  for(int i = 0; i < widthNum; i++)
+  {
+    for(int j = 0; j < heightNum; j++)
+    {
+      buttons[i][j].display();
+      //for(Button b : buttons)
+      //{
+      //  b.display();
+      //}
+      d = dist(mouseX, mouseY, i, j);  
+      //couldn't do dist(mouseX, mouseY, buttons[i][j], buttons[i][j]
+      //This make it so that d is only the distance from the very first circle button (top left)
+      if(d < s/2)
+      {
+        stroke(255, 255, 0);
+      }
+      else
+      {
+        stroke(0);
+      }
+    }
+  }
 }
 
 void mouseClicked()
 {
-  if(red && d < s)
+  for(int i = 0; i < widthNum; i++)
   {
-    green = true;
-  }
-  else
-  {
-    blue = false;
-  }
-  
-  if(green && d < s)
-  {
-    blue = true;
-  }
-  else
-  {
-    green = false;
-    red = false;
-  }
-  
-  if(blue && d < s)
-  {
-    red = true;
-  }
-  else
-  {
-    green = false;
-    blue = false;
-  }
-}
-
-void colors()
-{
-  if(red)
-  {
-    fill(255, 0, 0);
-    b1 = new Button(x, y, s, dist(mouseX, mouseY, x, y));
-    b1.display();
-  }
-  else if(green)
-  {
-    fill(0, 255, 0);
-    b1 = new Button(x, y, s, dist(mouseX, mouseY, x, y));
-    b1.display();
-  }
-  else if(blue)
-  {
-    fill(0, 0, 255);
-    b1 = new Button(x, y, s, dist(mouseX, mouseY, x, y));
-    b1.display();
+    for(int j = 0; j < heightNum; j++)
+    {
+      //Because d only works for the first circle, you can only click the top left to change colors)
+      buttons[i][j].onClick();
+      //for(Button b : buttons)
+      //{
+      //  b.onClick();
+      //}
+    }
   }
 }
