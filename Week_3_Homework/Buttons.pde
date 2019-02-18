@@ -91,6 +91,10 @@ class Buttons
       fill(230, 150, 150);
       rect(xR, yR, sR, sR);
     }
+    else
+    {
+      Cclicked = false;
+    }
   }
   
   void overR()
@@ -146,6 +150,7 @@ void mouseClicked()
   else
   {
     Cc = false;
+    Cclicked = true;
   }
 }
 
