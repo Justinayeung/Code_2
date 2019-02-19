@@ -11,6 +11,18 @@ class Rect
   
   void display()
   {
+    fill(0);
     rect(x, y, s, s1);
+  }
+  
+  void active()
+  {
+    fill(150, 20, 150);
+    rect(x, y, s, s1);
+    if(millis() > endTime)
+    {
+      isActive1 = false;
+      isActive2 = false;
+    }
   }
 }

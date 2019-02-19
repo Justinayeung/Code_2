@@ -7,113 +7,174 @@ float s2 = 300;
 float x3 = 400;
 float y3 = 700;
 float s3 = 50;
-int totalTime = 2;
-int endTime;
+float totalTime = 1;
+float endTime;
 int _a = 0;
-int _b = 1;
-int _c = 2;
-int _d = 3;
-int _e = 4;
+int _s = 1;
+int _d = 2;
+int _f = 3;
+int _j = 4;
+int _k = 5;
 int _state = _a;
-boolean isActive = false;
-Rect r1, r2, r3, r4, r5;
+boolean isActive1, isActive2 = false;
+Rect r1, r2, r3, r4, r5, r6;
 
 void setup()
 {
   size(1000, 1000);
   textAlign(CENTER);
   textSize(30);
+  totalTime *= 1000;
 }
 
 void draw()
 {
-  rect1();
-  rect2();
-  rect3();
-  rect4();
-  rect5();
+  allRect();
   switch(_state)
   {
     case 0:
       rect1();
     break;
+    case 1:
+      rect2();
+    break;
+    case 2:
+      rect3();
+    break;
+    case 3:
+      rect4();
+    break;
+    case 4:
+      rect5();
+    break;
+    case 5:
+      rect6();
+    break;
   }
 }
 
-void keyTypes()
+void keyTyped()
 {
-  isActive = true;
+  isActive1 = true;
+  isActive2 = true;
   switch(key)
   {
     case 'a':
       _state = _a;
     break;
-    case 'b':
-      _state = _b;
-    break;
-    case 'c':
-      _state = _c;
+    case 's':
+      _state = _s;
     break;
     case 'd':
       _state = _d;
     break;
-    case 'e':
-      _state = _e;
+    case 'f':
+      _state = _f;
+    break;
+    case 'j':
+      _state = _j;
+    break;
+    case 'k':
+      _state = _k;
     break;
   }
   endTime = millis() + totalTime;
 }
 
-void rect1()
+void allRect()
 {
-  fill(0);
   r1 = new Rect(x1, y1, s1, s1);
   r1.display();
   fill(255);
   text("a", x1+s1/2, y1+s1/2);
-  if(isActive)
+  r2 = new Rect(x2, y2, s3, s1);
+  r2.display();
+  fill(255);
+  text("s", x2+s3/2, y2+s1/2); 
+  r3 = new Rect(x3, y3, s3, s1);
+  r3.display();
+  fill(255);
+  text("d", x3+s3/2, y3+s1/2);
+  r4 = new Rect(x1, y2, s2, s1);
+  r4.display();
+  fill(255);
+  text("f", x1+s2/2, y2+s1/2);
+  r5 = new Rect(x3, y1, s3, s3);
+  r5.display();
+  fill(255);
+  text("j", x3+s3/2, y1+s3/2);  
+  r6 = new Rect(x2, y1, s3, s3);
+  r6.display();
+  fill(255);
+  text("k", x2+s3/2, y1+s3/2); 
+}
+
+void rect1()
+{
+  if(isActive1)
   {
-    fill(200, 10, 10);
-    r1.display();
-    if(millis() > endTime)
-    {
-      isActive = false;
-    }
+    r1 = new Rect(x1, y1, s1, s1);
+    r1.active();
+    fill(255);
+    text("a", x1+s1/2, y1+s1/2);
   }
 }
 
 void rect2()
 {
-  fill(0);
-  r2 = new Rect(x2, y2, s3, s1);
-  r2.display();
-  fill(255);
-  text("b", x2+s3/2, y2+s1/2); 
+  if(isActive2)
+  {
+    r2 = new Rect(x2, y2, s3, s1);
+    r2.active();
+    fill(255);
+    text("s", x2+s3/2, y2+s1/2); 
+  }
 }
 
 void rect3()
 {
-  fill(0);
   r3 = new Rect(x3, y3, s3, s1);
-  r3.display();
+  r3.active();
   fill(255);
-  text("c", x3+s3/2, y3+s1/2);  
+  text("d", x3+s3/2, y3+s1/2);
 }
 
 void rect4()
 {
-  fill(0);
   r4 = new Rect(x1, y2, s2, s1);
-  r4.display();
+  r4.active();
   fill(255);
-  text("d", x1+s2/2, y2+s1/2);  
+  text("f", x1+s2/2, y2+s1/2);
 }
 
 void rect5()
 {
-  fill(0);
   r5 = new Rect(x3, y1, s3, s3);
-  r5.display();
+  r5.active();
   fill(255);
-  text("e", x3+s3/2, y1+s3/2);  
+  text("j", x3+s3/2, y1+s3/2); 
+}
+
+void rect6()
+{
+  r6 = new Rect(x2, y1, s3, s3);
+  r6.active();
+  fill(255);
+  text("k", x2+s3/2, y1+s3/2); 
+}
+
+void mouseClicked()
+{
+  if(mouseX > x1 && mouseX < x1+s1 && mouseY > y1 && mouseY < y1+s1)
+  {
+    isActive1 = true;
+    rect1();
+    endTime = millis() + totalTime;
+  }
+  if(mouseX > x2 && mouseX < x2+s3 && mouseY > y2 && mouseY < y2+s1)
+  {
+    isActive2 = true;
+    rect2();
+    endTime = millis() + totalTime;
+  }
 }
