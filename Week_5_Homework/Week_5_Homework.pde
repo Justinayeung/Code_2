@@ -27,8 +27,10 @@ void setup()
 
 void draw()
 {
+  noStroke();
   background(170, 200, 255);
-  
+  fill(170, 240, 170);
+  rect(0, 400, 2000, 600);
   switch(_state)
   {
     case 0:
