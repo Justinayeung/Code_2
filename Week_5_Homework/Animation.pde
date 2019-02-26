@@ -4,8 +4,9 @@ class Animation
   PImage [] bunSleep = new PImage[3];
   PImage [] bunRight = new PImage[15];
   PImage [] bunLeft = new PImage[15];
-  PImage [] bunDown = new PImage[14];
-  PImage [] bunClicked = new PImage[1];
+  PImage [] bunDown = new PImage[7];
+  int[] bunDframes = {0, 1, 2, 3, 4, 5, 6, 6, 5, 4, 3, 2, 1, 0};
+  PImage bunClicked = loadImage("Bun18.png");
   
   Animation()
   {
@@ -51,22 +52,13 @@ class Animation
     bunDown[4] = loadImage("BunRoll4.png");
     bunDown[5] = loadImage("BunRoll5.png");
     bunDown[6] = loadImage("BunRoll6.png");
-    bunDown[7] = loadImage("BunRoll6.png");
-    bunDown[8] = loadImage("BunRoll5.png");
-    bunDown[9] = loadImage("BunRoll4.png");
-    bunDown[10] = loadImage("BunRoll3.png");
-    bunDown[11] = loadImage("BunRoll2.png");
-    bunDown[12] = loadImage("BunRoll1.png");
-    bunDown[13] = loadImage("BunRoll0.png");
-      bunClicked[0] = loadImage("Bun18.png");
   }
   
   void displayBlink()
   {
     if(isBlink)
     {
-      frameRate(2);
-      image(bunBlink[frameCount%2], xPos, yPos);
+      image(bunBlink[(frameCount/30) % bunBlink.length], xPos, yPos);
     }
     if(millis() > endTimeBlink)
     {
@@ -79,35 +71,40 @@ class Animation
   {
     if(isSleep)
     {
-      frameRate(2);
-      image(bunSleep[frameCount%3], xPos, yPos);
+      image(bunSleep[(frameCount/30) % bunSleep.length], xPos, yPos);
     }
   }
   
   void displayRight()
   {   
-    frameRate(6);
-    image(bunRight[frameCount%15], xPos, yPos); 
-    _state = _blink;
+    image(bunRight[(frameCount/5) % bunRight.length], xPos, yPos); 
+    if(millis() > endTimeRight)
+    {
+      _state = _blink;
+    }
   }
   
   void displayLeft()
   {  
-    frameRate(6);
-    image(bunLeft[frameCount%15], xPos, yPos);
-    _state = _blink;
+    image(bunLeft[(frameCount/5) % bunLeft.length], xPos, yPos);
+    if(millis() > endTimeLeft)
+    {
+      _state = _blink;
+    }
   }
   
   void displayDown()
   {
-    frameRate(6);
-    image(bunDown[frameCount%14], xPos, yPos);
-    _state = _blink;
+    image(bunDown[bunDframes[(frameCount/5) % bunDframes.length]], xPos, yPos);
+    if(millis() > endTimeDown)
+    {
+      _state = _blink;
+    }
   }
   
   void bunClicked()
   {
-    image(bunClicked[frameCount%1], xPos, yPos);
+    image(bunClicked, xPos, yPos);
     _state = _blink;
   }
 }

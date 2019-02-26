@@ -1,7 +1,8 @@
 Animation sleep, blink, right, left, down, up, click;
 Clouds c1, c2, c3, c4, c5;
-float endTimeBlink;
+float endTimeBlink, endTimeRight, endTimeLeft, endTimeDown;
 float toSleep = 3;
+float totalTime = 2;
 boolean isSleep = false;
 boolean isBlink = true;
 float xPos, yPos;
@@ -16,6 +17,7 @@ int _state = _blink;
 
 void setup()
 {
+  frameRate(60);
   size(2000, 1000);
   blink = new Animation();
   sleep = new Animation();
@@ -24,6 +26,7 @@ void setup()
   down = new Animation();
   up = new Animation();
   click = new Animation();
+  totalTime *= 1000;
   toSleep *= 1000;
   c1 = new Clouds();
   c2 = new Clouds();
@@ -73,15 +76,15 @@ void keyTyped()
     break;
     case 'a':
       _state = _left;
-       endTimeBlink = millis() + toSleep;
+       endTimeLeft = millis() + toSleep;
     break;
     case 's':
       _state = _down;
-       endTimeBlink = millis() + toSleep;
+       endTimeDown = millis() + toSleep;
     break;
     case 'd':
       _state = _right;
-       endTimeBlink = millis() + toSleep;
+       endTimeRight = millis() + toSleep;
     break;
   }
 }
