@@ -1,9 +1,11 @@
 Animation sleep, blink, right, left, down, up, click;
+Clouds c1, c2, c3, c4, c5;
 float endTimeBlink;
 float toSleep = 3;
 boolean isSleep = false;
 boolean isBlink = true;
 float xPos, yPos;
+float xC1, yC1, xC2, yC2, xC3, yC3, xC4, yC4, xC5, yC5;
 int _blink = 0;
 int _sleep = 1;
 int _right = 2;
@@ -23,6 +25,11 @@ void setup()
   up = new Animation();
   click = new Animation();
   toSleep *= 1000;
+  c1 = new Clouds();
+  c2 = new Clouds();
+  c3 = new Clouds();
+  c4 = new Clouds();
+  c5 = new Clouds();
 }
 
 void draw()
@@ -31,6 +38,7 @@ void draw()
   background(170, 200, 255);
   fill(170, 240, 170);
   rect(0, 400, 2000, 600);
+  clouds();
   switch(_state)
   {
     case 0:
@@ -85,4 +93,18 @@ void mouseClicked()
     _state = _click;
     endTimeBlink = millis() + toSleep;
   }
+}
+
+void clouds()
+{
+  c1.display1();
+  c1.boundaries();
+  c2.display2();
+  c2.boundaries();
+  c3.display3();
+  c3.boundaries();
+  c4.display4();
+  c4.boundaries();
+  c5.display5();
+  c5.boundaries();
 }
