@@ -3,35 +3,33 @@ float barW;
 float xPos;
 float yPos;
 float speed = 3;
-float ellipseX;
-float ellipseY;
+float size;
+PVector ellipsePos;
 
 void setup()
 {
   size(1000, 500);
   noStroke();
-  for(int i = 0; i < values.length; i++)
-  {
-    barW = width/values.length;
-    yPos = height*values[i];
-    rect(xPos, 0, barW, yPos);
-    xPos += barW;
-  }
+  ellipsePos = new PVector(0,height*values[0]);
+  size = 10;
 }
 
 void draw()
 {
-  //background(255);
-  fill(200, 100, 100);
+  background(100, 150, 200);
+  fill(150, 240, 170);
   for(int i = 0; i < values.length; i++)
   {
     barW = width/values.length;
     yPos = height*values[i];
-    rect(xPos, 0, barW, yPos);
-    xPos += barW;
+    fill(150, 240, 170);
+    rect(barW*i, 0, barW, yPos);
   }
-  fill(0);
-  ellipseX += speed;
-  ellipseY = height;
-  ellipse(ellipseX, ellipseY, 10, 10);
+  fill(255);
+  ellipse(ellipsePos.x, ellipsePos.y, size, size);
+  ellipsePos.x += speed;
+  if(ellipsePos.x > width+size)
+  {
+    ellipsePos.x = -size;
+  }
 }
