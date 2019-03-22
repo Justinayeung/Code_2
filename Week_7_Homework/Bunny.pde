@@ -52,7 +52,7 @@ class Bunny
   PImage[] bunHop = new PImage[numHop];
   int frameHop = frameCount % bunHop.length;
   
-  int numSwim = 23;
+  int numSwim = 22;
   PImage[] bunSwim = new PImage[numSwim];
   int frameSwim = frameCount % bunSwim.length;
   
@@ -157,25 +157,28 @@ class Bunny
     bunSwim[18] = loadImage("BunSwim19.png");
     bunSwim[19] = loadImage("BunSwim20.png");
     bunSwim[20] = loadImage("BunSwim21.png");
-    bunSwim[21] = loadImage("BunSwim22.png");
-    bunSwim[22] = loadImage("BunSwim23.png");
+    bunSwim[21] = loadImage("BunSwim23.png");
   }
   
   void update()
   {
     pos.add(vel);
     
-    if(pos.y < 100)
+    if(pos.y < 150)
     {
-      vel = new PVector(-facingDirection * speed * .4, hopSpeed);
+      vel = new PVector(speed, -hopSpeed);
+    }
+    if(pos.y > 700)
+    {
+      vel = new PVector(speed, hopSpeed);
     }
     if(pos.x > 900)
     {
-      vel = new PVector(facingDirection *= -1 * speed, 0);
+      vel = new PVector(-facingDirection * speed, 0);
     }
     else if(pos.x < 100)
     {
-      vel = new PVector(facingDirection *= -1 * speed, 0);
+      vel = new PVector(-facingDirection * speed, 0);
     }
   
     if(chooseNewDirection)
@@ -195,7 +198,7 @@ class Bunny
       case 3:  //Left
       case 4:  //Down
       case 5:  //Hop
-        vel = new PVector(-facingDirection * speed * .4, random(-hopSpeed, hopSpeed));
+        vel = new PVector(-facingDirection * speed * .4, random(-hopSpeed*2, hopSpeed*2));
         break;
     }
   }
@@ -222,7 +225,15 @@ class Bunny
         displayLeft();
         break;
       case 4:  //Down
-        displayDown();
+        if(pos.y < 600)
+        {
+          displayDown();
+        }
+        else
+        {
+          _state = getNewState();
+          chooseNewDirection = true;
+        }
         break;
       case 5:  //Hop
         displayHop();
