@@ -170,7 +170,7 @@ class Bunny
     }
     if(pos.y > 700)
     {
-      vel = new PVector(speed, hopSpeed);
+      vel = new PVector(speed, hopSpeed *= -1);
     }
     if(pos.x > 900)
     {
@@ -239,7 +239,7 @@ class Bunny
         displayHop();
         break;
       case 6:  //Swim
-        if(pos.y > 600 && pos.y < 700)
+        if(pos.y > 600 && pos.y < 750)
         {
           displaySwim();
         }
