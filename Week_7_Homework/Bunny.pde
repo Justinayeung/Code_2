@@ -13,7 +13,7 @@ class Bunny
   int _swim = 7;
   int _state = _blink;
   float[][] stateChoices = {
-    //Blink, Sleep, Right, Left, Down, Hop
+    //Blink, Sleep, Right, Left, Down, Hop, Swim
     {.15, .15, .15, .15, .15, .15, .1},
     {.1, .15, .15, .15, .15, .15, .15},
     {.15, .15, .15, .15, .15, .1, .15},
